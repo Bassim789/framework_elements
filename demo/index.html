@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proto_frame</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="lib/mustache.min.js"></script>
+	<script src="lib/mustache_jquery_abstractor.js"></script>
+	<script src="lib/event_binder.js"></script>
+</head>
+<body>
+	<header event="click:header_clicked">
+		Header
+	</header>
+	<br>
+	<div id="content">Loading...</div>
+</body>
+</html>
+
+<template template="page_1">
+	<h2>Salut {{name}}</h2>
+	<button event="click:show_alert">
+		click me for alert
+	</button>
+	<button event="click:go_to_page_2">
+		click me
+	</button>
+</template>
+
+<template template="page_2">
+	<h2>Salut page 2</h2>
+	<button event="click:go_to_page_1">
+		click me
+	</button>
+	<input type="text" event="click:click_on_input enter:press_enter keyup:which_key" value="">
+</template>
+
+<script>
+	let pages = {}
+	pages.Page_1 = class{
+		constructor(){
+			$('#content').template('page_1', {
+				name: 'Bassim'
+			})
+			new Event_binder(this, {
+				click: [
+					'show_alert',
+					'go_to_page_2'
+				]
+			})
+		}
+		show_alert(){
+			alert('ok')
+		}
+		go_to_page_2(){
+			new pages.Page_2()
+		}
+	}
+	pages.Page_2 = class{
+		constructor(){
+			$('#content').template('page_2')
+			new Event_binder(this, {
+				click: [
+					'go_to_page_1',
+					'click_on_input'
+				],
+				enter: ['press_enter'],
+				keyup: ['which_key']
+			})
+		}
+		go_to_page_1(){
+			new pages.Page_1()
+		}
+		click_on_input(){
+			console.log('click_on_input')
+		}
+		press_enter(){
+			console.log('press_enter')
+		}
+		which_key(el, event){
+			console.log('key: ' + event.which)
+		}
+	}
+	Header = class {
+		constructor(){
+			new Event_binder(this, {
+				click: ['header_clicked']
+			})
+		}
+		header_clicked(){
+			alert('header_clicked')
+		}
+	}
+	new Header()
+	new pages.Page_1()
+</script>
