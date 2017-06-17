@@ -5,8 +5,9 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="lib/mustache.min.js"></script>
-	<script src="lib/mustache_jquery_abstractor.js"></script>
-	<script src="lib/event_binder.js"></script>
+	<script src="../modules_es6/mustache_wrapper.js"></script>
+	<script src="../modules_es6/event_binder.js"></script>
+	<script src="../modules_es6/api.js"></script>
 </head>
 <body>
 	<header event="click:header_clicked">
@@ -18,19 +19,22 @@
 </html>
 
 <template template="page_1">
-	<h2>Salut {{name}}</h2>
+	<h2>Hello {{name}}</h2>
 	<button event="click:show_alert">
-		click me for alert
+		alert
 	</button>
 	<button event="click:go_to_page_2">
-		click me
+		page 2
+	</button>
+	<button event="click:test_api">
+		test_api
 	</button>
 </template>
 
 <template template="page_2">
 	<h2>Salut page 2</h2>
 	<button event="click:go_to_page_1">
-		click me
+		page 1
 	</button>
 	<input type="text" event="click:click_on_input enter:press_enter keyup:which_key" value="">
 </template>
@@ -40,12 +44,13 @@
 	pages.Page_1 = class{
 		constructor(){
 			$('#content').template('page_1', {
-				name: 'Bassim'
+				name: 'your name'
 			})
 			new Event_binder(this, {
 				click: [
 					'show_alert',
-					'go_to_page_2'
+					'go_to_page_2',
+					'test_api'
 				]
 			})
 		}
@@ -54,6 +59,11 @@
 		}
 		go_to_page_2(){
 			new pages.Page_2()
+		}
+		test_api(){
+			$.api('api/data1.json', '', {}, (data) => {
+				console.log(data)
+			})
 		}
 	}
 	pages.Page_2 = class{
