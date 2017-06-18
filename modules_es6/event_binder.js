@@ -16,7 +16,7 @@ let Event_binder = class {
 			id = '[event~="' + event + ':' + action + '"]'
 		if (event === 'enter') {
 			this.container.off('keyup', id).on('keyup', id, function(e) {
-				if (e.which == 13) {
+				if (e.which === 13) {
 					return source[action](this, e)
 				}
 			})
