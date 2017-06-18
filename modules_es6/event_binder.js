@@ -1,24 +1,27 @@
 let Event_binder = class {
-	constructor(source, events) {
-		this.each_event(source, events)
+	constructor(source, container, events) {
+		this.source = source
+		this.container = $(container)
+		this.each_event(events)
 	}
-	each_event(source, events) {
+	each_event(events) {
 		$.each(events, (event, actions) => {
 			$.each(actions, (i, action) => {
-				this.bind(source, event, action)
+				this.bind(event, action)
 			})
 		})
 	}
-	bind(source, event, action) {
-		let id = '[event~="' + event + ':' + action + '"]'
+	bind(event, action) {
+		let source = this.source,
+			id = '[event~="' + event + ':' + action + '"]'
 		if (event === 'enter') {
-			$('body').off('keyup', id).on('keyup', id, function(e) {
+			this.container.off('keyup', id).on('keyup', id, function(e) {
 				if (e.which == 13) {
 					return source[action](this, e)
 				}
 			})
 		} else {
-			$('body').off(event, id).on(event, id, function(e) {
+			this.container.off(event, id).on(event, id, function(e) {
 				return source[action](this, e)
 			})
 		}

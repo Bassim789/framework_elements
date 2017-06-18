@@ -1,106 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Proto_frame</title>
-	<link rel="stylesheet" type="text/css" href="main.css">
+	<title>Proto frame</title>
+	<link href="public/part/splash_screen/splash_screen.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="lib/mustache.min.js"></script>
 	<script src="../modules_es6/mustache_wrapper.js"></script>
 	<script src="../modules_es6/event_binder.js"></script>
 	<script src="../modules_es6/api.js"></script>
+	<script src="../modules_es6/loader.js"></script>
 </head>
 <body>
-	<header event="click:header_clicked">
-		Header
-	</header>
-	<br>
-	<div id="content">Loading...</div>
+	<header></header>
+	<div id="body_wrap">
+		<div id="body"></div>
+	</div>
+	<footer></footer>
+	<div id="splash_screen">
+		<div id="splash_screen_inner">
+			<div class="ball_out"></div>
+			<div class="ball_in"></div>
+		</div>
+	</div>
 </body>
 </html>
-
-<template template="page_1">
-	<h2>Hello {{name}}</h2>
-	<button event="click:show_alert">
-		alert
-	</button>
-	<button event="click:go_to_page_2">
-		page 2
-	</button>
-	<button event="click:test_api">
-		test_api
-	</button>
-</template>
-
-<template template="page_2">
-	<h2>Salut page 2</h2>
-	<button event="click:go_to_page_1">
-		page 1
-	</button>
-	<input type="text" event="click:click_on_input enter:press_enter keyup:which_key" value="">
-</template>
-
 <script>
 	let pages = {}
-	pages.Page_1 = class{
-		constructor(){
-			$('#content').template('page_1', {
-				name: 'your name'
-			})
-			new Event_binder(this, {
-				click: [
-					'show_alert',
-					'go_to_page_2',
-					'test_api'
-				]
-			})
-		}
-		show_alert(){
-			alert('ok')
-		}
-		go_to_page_2(){
-			new pages.Page_2()
-		}
-		test_api(){
-			$.api('api/data1.json', '', {}, (data) => {
-				console.log(data)
-			})
-		}
-	}
-	pages.Page_2 = class{
-		constructor(){
-			$('#content').template('page_2')
-			new Event_binder(this, {
-				click: [
-					'go_to_page_1',
-					'click_on_input'
-				],
-				enter: ['press_enter'],
-				keyup: ['which_key']
-			})
-		}
-		go_to_page_1(){
-			new pages.Page_1()
-		}
-		click_on_input(){
-			console.log('click_on_input')
-		}
-		press_enter(){
-			console.log('press_enter')
-		}
-		which_key(el, event){
-			console.log('key: ' + event.which)
-		}
-	}
-	Header = class {
-		constructor(){
-			new Event_binder(this, {
-				click: ['header_clicked']
-			})
-		}
-		header_clicked(){
-			alert('header_clicked')
-		}
-	}
-	new Header()
-	new pages.Page_1()
+	new Loader(() => {
+		new Header()
+		new pages.index()
+		$('#splash_screen').fadeOut(1000)
+	})
 </script>

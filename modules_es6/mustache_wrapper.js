@@ -10,5 +10,11 @@ $.fn.extend({
 		this.append(Mustache.render(
 			$('template[template="' + template + '"]').html(), data
 		))
+	},
+	template_prepend: function(template, data) {
+		if(data === undefined) data = {}
+		this.prepend(Mustache.render(
+			$('template[template="' + template + '"]').html(), data
+		))
 	}
 })
