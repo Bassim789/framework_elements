@@ -1,0 +1,13 @@
+Options +FollowSymLinks -MultiViews
+RewriteEngine On
+
+RewriteCond %{HTTPS} =on
+RewriteRule ^(.*)$ - [env=proto:https]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ - [env=proto:http]
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.+)$ $1.php [NC,L]
+
+# MAKE PAGE AS QUERY
+RewriteRule ^([a-z0-9_-]+)$ ?page=$1 [QSA]
