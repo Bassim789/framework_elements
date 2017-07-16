@@ -1,10 +1,10 @@
 <?php
 class Loader {
-	function __construct($compiled, $folder_compiled) {
+	function __construct($root, $compiled, $folder_compiled) {
 		$this->compiled = $compiled;
 		$this->folder_compiled = $folder_compiled;
 		$this->files = [];
-		$this->root = ROOT_PATH_WWW;
+		$this->root = $root;
 	}
 	function include_folders($folders) {
 		foreach ($folders as $key => $folder) {
