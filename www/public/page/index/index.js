@@ -18,7 +18,7 @@ pages.index = class{
 		router.change_page('page_2')
 	}
 	test_api(){
-		$.api('api/data1.json', '', {}, (data) => {
+		$.api('api/test_data.json', '', {}, (data) => {
 			console.log(data)
 		})
 	}

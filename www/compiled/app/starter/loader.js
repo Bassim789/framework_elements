@@ -5,10 +5,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Loader = function () {
-	function Loader(compiled, callback) {
+	function Loader(compiled, folder_compiled, callback) {
 		_classCallCheck(this, Loader);
 
 		this.compiled = compiled;
+		this.folder_compiled = folder_compiled;
 		this.callback = callback;
 		this.nb_file_loaded = 0;
 		this.nb_file_to_load = 0;
@@ -22,11 +23,14 @@ var Loader = function () {
 			var _this = this;
 
 			$.post('api/php/app/load_ressources', {
-				compiled: this.compiled
+				compiled: this.compiled,
+				folder_compiled: this.folder_compiled
 			}, function (data) {
 				_this.nb_file_to_load = data.files.length;
 				_this.load_files(data.files);
-			}, 'json');
+			}, 'json').fail(function (err) {
+				console.log(err.responseText);
+			});
 		}
 	}, {
 		key: 'load_files',

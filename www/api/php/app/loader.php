@@ -1,7 +1,8 @@
 <?php
 class Loader {
-	function __construct($compiled) {
+	function __construct($compiled, $folder_compiled) {
 		$this->compiled = $compiled;
+		$this->folder_compiled = $folder_compiled;
 		$this->files = [];
 	}
 	function include_folders($folders) {
@@ -17,15 +18,16 @@ class Loader {
 		} else {
 			$file = explode(ROOT_PATH, $file)[1];
 			if (endsWith($file, '.js')) {
-				if ($this->compiled && endsWith($file, '_compiled.js') ||
-					!$this->compiled && !endsWith($file, '_compiled.js')){
-					$this->files[] = [
-						'type' => 'js',
-						'url' => $file,
-						'timestamp' => filemtime(ROOT_PATH.$file)
-					];
+				if ($this->compiled){
+					$file = $this->folder_compiled.'/'.$file;
 				}
-			} else if (endsWith($file, '.css')) {
+				$this->files[] = [
+					'type' => 'js',
+					'url' => $file,
+					'timestamp' => filemtime(ROOT_PATH.$file)
+				];
+			} else if (endsWith($file, '.styl')) {
+				$file = $this->folder_compiled.'/'.str_replace('.styl', '.css', $file);
 				$this->files[] = [
 					'type' => 'css',
 					'url' => $file,

@@ -29,7 +29,7 @@ pages.index = function () {
 	}, {
 		key: 'test_api',
 		value: function test_api() {
-			$.api('api/data1.json', '', {}, function (data) {
+			$.api('api/test_data.json', '', {}, function (data) {
 				console.log(data);
 			});
 		}

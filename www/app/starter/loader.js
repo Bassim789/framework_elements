@@ -1,6 +1,7 @@
 let Loader = class {
-	constructor(compiled, callback) {
+	constructor(compiled, folder_compiled, callback) {
 		this.compiled = compiled
+		this.folder_compiled = folder_compiled
 		this.callback = callback
 		this.nb_file_loaded = 0
 		this.nb_file_to_load = 0
@@ -9,11 +10,14 @@ let Loader = class {
 	}
 	run() {
 		$.post('api/php/app/load_ressources', {
-			compiled: this.compiled
+			compiled: this.compiled,
+			folder_compiled: this.folder_compiled
 		}, (data) => {
 			this.nb_file_to_load = data.files.length
 			this.load_files(data.files)
-		}, 'json')
+		}, 'json').fail((err) => {
+			console.log(err.responseText)
+		})
 	}
 	load_files(files) {
 		$.each(files, (key, file) => {
