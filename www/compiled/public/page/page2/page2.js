@@ -19,7 +19,7 @@ pages.page_2 = function () {
 	_createClass(_class, [{
 		key: 'go_to_page_1',
 		value: function go_to_page_1() {
-			router.change_page('');
+			app.router.change_page('');
 		}
 	}, {
 		key: 'click_on_input',

@@ -11,7 +11,7 @@ pages.page_2 = class{
 		})
 	}
 	go_to_page_1(){
-		router.change_page('')
+		app.router.change_page('')
 	}
 	click_on_input(){
 		console.log('click_on_input')

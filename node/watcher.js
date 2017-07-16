@@ -88,7 +88,6 @@ const watcher = new Watcher({
 	folder_compiled: 'compiled',
 	folders: [
 		'public',
-		'app/app',
-		'app/starter'
+		'app/app'
 	]
 })

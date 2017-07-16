@@ -41,7 +41,6 @@ var Watcher = function () {
 	}, {
 		key: 'reload',
 		value: function reload(file) {
-			console.log(file);
 			if (file.endsWith('.css')) {
 				this.reload_css(file);
 			} else {

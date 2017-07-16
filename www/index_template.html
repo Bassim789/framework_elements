@@ -8,9 +8,21 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="app/lib/mustache.min.js"></script>
 	<script src="app/lib/socket.js"></script>
-	<link href="compiled/app/starter/splash_screen.css" rel="stylesheet">
-	<script src="app/starter/loader.js"></script>
-	<script src="app/starter/start.js"></script>
+	<script>
+		pages = {}
+		{{#gvar}}
+			gvar = {}
+			gvar.watcher = {{{watcher}}}
+			gvar.img = {}
+			gvar.img.default_desktop = 'app/media/img/back2.jpg'
+			gvar.img.default_mobile = 'app/media/img/back2.jpg'
+		{{/gvar}}
+	</script>
+	{{#ressources}}
+		{{#css}}<link href="{{url}}?t={{timestamp}}" rel="stylesheet">{{/css}}
+		{{#js}}<script src="{{url}}?t={{timestamp}}"></script>{{/js}}
+		{{#html}}{{{content}}}{{/html}}
+	{{/ressources}}
 </head>
 <body>
 	<header></header>
@@ -25,5 +37,6 @@
 			<div class="ball_in"></div>
 		</div>
 	</div>
+	<script> app = new App() </script>
 </body>
 </html>

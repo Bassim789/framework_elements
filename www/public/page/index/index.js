@@ -15,10 +15,10 @@ pages.index = class{
 		alert('header_clicked from page 1')
 	}
 	go_to_page_2(){
-		router.change_page('page_2')
+		app.router.change_page('page_2')
 	}
 	test_api(){
-		$.api('api/test_data.json', '', {}, (data) => {
+		$.api_php('test_data', '', {}, (data) => {
 			console.log(data)
 		})
 	}

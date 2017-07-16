@@ -24,12 +24,12 @@ pages.index = function () {
 	}, {
 		key: 'go_to_page_2',
 		value: function go_to_page_2() {
-			router.change_page('page_2');
+			app.router.change_page('page_2');
 		}
 	}, {
 		key: 'test_api',
 		value: function test_api() {
-			$.api('api/test_data.json', '', {}, function (data) {
+			$.api_php('test_data', '', {}, function (data) {
 				console.log(data);
 			});
 		}

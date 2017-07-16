@@ -61,7 +61,6 @@ const js2es5 = new Js2es5({
 	folder_compiled: 'compiled',
 	folders: [
 		'public',
-		'app/app',
-		'app/starter'
+		'app/app'
 	]
 })
