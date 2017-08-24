@@ -1,6 +1,7 @@
 let Router = class {
 	constructor(domain) {
 		this.domain = domain
+		$(window).on('popstate', () => this.popstate())
 	}
 	get_url_param(param) {
 		let page_url = decodeURIComponent(window.location.search.substring(1)),
@@ -31,5 +32,8 @@ let Router = class {
 			.replace(/\//g,'')
 		page_name = page_name === '' ? 'index' : page_name
 		new pages[page_name]()	
+	}
+	popstate() {
+		this.load_page()
 	}
 }
